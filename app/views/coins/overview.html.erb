@@ -1,0 +1,108 @@
+<div class="container">
+  <h1 class="mt-5 mb-4">Top 10 Coins</h1>
+  <div class="row">
+    <div class="col">
+      <%= link_to "Coins List", coins_path, class: "btn btn-primary" %>
+    </div>
+    <div class="col">
+      <%= button_to 'Update Data', update_data_coins_path, method: :post, disabled: Time.now - Coin.last.updated_at < 1.day, class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Rank</th>
+        <th scope="col">Name</th>
+        <th scope="col">Symbol</th>
+        <th scope="col">Price</th>
+        <th scope="col">Market Cap</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @coins.each do |coin| %>
+        <tr>
+          <td><%= coin.rank %></td>
+          <td><%= link_to coin.name, coin_path(coin) %></td>
+          <td><%= coin.symbol %></td>
+          <td><%= number_to_currency(coin.price, precision: 2) %></td>
+          <td><%= number_to_currency(coin.market_cap, precision: 2) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Minimum Price</h5>
+          <p class="card-text"><%= number_to_currency(@min_price, precision: 2) %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Maximum Price</h5>
+          <p class="card-text"><%= number_to_currency(@max_price, precision: 2) %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Average Price</h5>
+          <p class="card-text"><%= number_to_currency(@avg_price, precision: 2) %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Total Market Cap</h5>
+          <p class="card-text"><%= number_to_currency(@total_market_cap, precision: 2) %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Total Volume (24h)</h5>
+          <p class="card-text"><%= number_to_currency(@volume_24h, precision: 2) %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Number of Coins</h5>
+          <p class="card-text"><%= @num_coins %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Average Price Change (24h)</h5>
+          <p class="card-text"><%= number_to_percentage(@avg_delta_24h, precision: 2) %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Highest Market Cap</h5>
+          <p class="card-text"><%= @highest_market_cap_coin.name %> (<%= number_to_currency(@highest_market_cap_coin.market_cap, precision: 2) %>)</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Most Traded Coin (24h)</h5>
+          <p class="card-text"><%= @most_traded_coin.name %> (<%= number_to_currency(@most_traded_coin.volume_24h, precision: 2) %>)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= bar_chart Coin.order(:rank).limit(10).pluck(:symbol, :market_cap).to_h %>
+</div>

@@ -1,0 +1,26 @@
+<div class="container">
+  <h1 class="mt-5 mb-4">All Coins</h1>
+  <%= link_to 'Back to main', root_path,  class: "btn btn-primary" %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Rank</th>
+        <th scope="col">Name</th>
+        <th scope="col">Symbol</th>
+        <th scope="col">Price</th>
+        <th scope="col">Market Cap</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @coins.each do |coin| %>
+        <tr>
+          <td><%= coin.rank %></td>
+          <td><%= link_to coin.name, coin_path(coin) %></td>
+          <td><%= coin.symbol %></td>
+          <td><%= number_to_currency(coin.price, precision: 2) %></td>
+          <td><%= number_to_currency(coin.market_cap, precision: 2) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

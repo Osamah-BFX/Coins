@@ -1,0 +1,49 @@
+<div class="container">
+  <h1 class="mt-5 mb-4"><%= @coin.name %> (<%= @coin.symbol %>)</h1>
+  <table class="table table-striped">
+    <tr>
+      <th>Rank</th>
+      <td><%= @coin.rank %></td>
+    </tr>
+    <tr>
+      <th>Price</th>
+      <td><%= number_to_currency(@coin.price, precision: 2) %></td>
+    </tr>
+    <tr>
+      <th>Market Cap</th>
+      <td><%= number_to_currency(@coin.market_cap, precision: 2) %></td>
+    </tr>
+    <tr>
+      <th>Low (24h)</th>
+      <td><%= number_to_currency(@coin.low_24h, precision: 2) %></td>
+    </tr>
+    <tr>
+      <th>High (24h)</th>
+      <td><%= number_to_currency(@coin.high_24h, precision: 2) %></td>
+    </tr>
+    <tr>
+      <th>Delta (1h)</th>
+      <td><%= @coin.delta_1h %></td>
+    </tr>
+    <tr>
+      <th>Delta (24h)</th>
+      <td><%= @coin.delta_24h %></td>
+    </tr>
+    <tr>
+      <th>Delta (7d)</th>
+      <td><%= @coin.delta_7d %></td>
+    </tr>
+    <tr>
+      <th>Delta (30d)</th>
+      <td><%= @coin.delta_30d %></td>
+    </tr>
+  </table>
+  <div class="row">
+    <div class="col">
+      <%= link_to "Back to Coins List", coins_path, class: "btn btn-primary" %>
+    </div>
+    <div class="col">
+      <%= link_to 'Back to main', root_path,  class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>
